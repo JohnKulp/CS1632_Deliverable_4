@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 
 /**
@@ -10,8 +11,8 @@ public class Properties {
     }
 
 
-    public static void badInterviewSort(ArrayList<Integer> arr){
-        Collections.sort(arr);
+    public static void badInterviewSort(int[] arr){
+        Arrays.sort(arr);
         //did I get the job?
     }
 }

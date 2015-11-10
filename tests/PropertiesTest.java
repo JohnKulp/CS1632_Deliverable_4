@@ -8,16 +8,16 @@ import static org.junit.Assert.*;
  */
 public class PropertiesTest {
 
-
-    public ArrayList<ArrayList<Integer>> createRandomArrays(){
+    //this helper function creates random arrays to sort
+    public ArrayList<int[]> createRandomArrays(){
         Random rand = new Random();
-        ArrayList<ArrayList<Integer>> listOfArrays = new ArrayList<>();
+        ArrayList<int[]> listOfArrays = new ArrayList<>();
 
         for(int i = 0; i < 100; i++){
             int len = rand.nextInt(1000);//make an array of up to 1000 values
-            ArrayList<Integer> arrToAdd = new ArrayList<>();
+            int[] arrToAdd = new int[len];
             for (int z = 0; z < len; z ++){
-                arrToAdd.add(rand.nextInt(1000));
+                arrToAdd[z] = rand.nextInt(1000);
             }
             listOfArrays.add(arrToAdd);
         }
@@ -25,17 +25,18 @@ public class PropertiesTest {
         return listOfArrays;
     }
 
+    //this tests that every subsequent value in the list is an increment of the previous
     @Test
     public void testPropertyIncrements(){
-        ArrayList<ArrayList<Integer>> randomArrays;
+        ArrayList<int[]> randomArrays;
         randomArrays = createRandomArrays();
         int invalidArrayCount = 0;
-        for(ArrayList<Integer> array : randomArrays){
+        for(int[] array : randomArrays){
 
             Properties.badInterviewSort(array);
-            int prev = array.get(0);
-            for(int i = 0; i < array.size(); i++){
-                if(prev > array.get(i)){
+            int prev = array[0];
+            for(int i = 0; i < array.length; i++){
+                if(prev > array[i]){
                     invalidArrayCount++;
                 }
             }
@@ -44,15 +45,16 @@ public class PropertiesTest {
         assertEquals(invalidArrayCount, 0);
     }
 
+    //this tests that the sort maintains the length of each list
     @Test
     public void testPropertyLength(){
-        ArrayList<ArrayList<Integer>> randomArrays;
+        ArrayList<int[]> randomArrays;
         randomArrays = createRandomArrays();
         int invalidArrayCount = 0;
-        for(ArrayList<Integer> array : randomArrays){
-            int prevSize = array.size();
+        for(int[] array : randomArrays){
+            int prevSize = array.length;
             Properties.badInterviewSort(array);
-            int postSize = array.size();
+            int postSize = array.length;
 
             if(prevSize != postSize){
                 invalidArrayCount ++;
@@ -63,15 +65,16 @@ public class PropertiesTest {
 
     }
 
+    //This tests that the sort maintains the same quantity of each number in the list
     @Test
     public void testPropertySameAmountOfEachNumber(){
-        ArrayList<ArrayList<Integer>> randomArrays;
+        ArrayList<int[]> randomArrays;
         randomArrays = createRandomArrays();
         int invalidArrayCount = 0;
-        for(ArrayList<Integer> array : randomArrays){
+        for(int[] array : randomArrays){
             HashMap<Integer, Integer> prevCount= new HashMap<>();
 
-            for(int i = 0; i < array.size(); i++){
+            for(int i = 0; i < array.length; i++){
                 if(prevCount.containsKey(i)){
                     prevCount.put(i, prevCount.get(i) + 1);
                 }
@@ -81,7 +84,7 @@ public class PropertiesTest {
             Properties.badInterviewSort(array);
             HashMap<Integer, Integer> postCount= new HashMap<>();
 
-            for(int i = 0; i < array.size(); i++){
+            for(int i = 0; i < array.length; i++){
                 if(postCount.containsKey(i)){
                     postCount.put(i, postCount.get(i)+1);
                 }
